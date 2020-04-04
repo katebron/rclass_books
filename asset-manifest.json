@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/rclass_books/static/css/main.5f361e03.chunk.css",
+    "main.js": "/rclass_books/static/js/main.ebd47ab3.chunk.js",
+    "main.js.map": "/rclass_books/static/js/main.ebd47ab3.chunk.js.map",
+    "runtime-main.js": "/rclass_books/static/js/runtime-main.bcbabcba.js",
+    "runtime-main.js.map": "/rclass_books/static/js/runtime-main.bcbabcba.js.map",
+    "static/js/2.c81a58c9.chunk.js": "/rclass_books/static/js/2.c81a58c9.chunk.js",
+    "static/js/2.c81a58c9.chunk.js.map": "/rclass_books/static/js/2.c81a58c9.chunk.js.map",
+    "index.html": "/rclass_books/index.html",
+    "precache-manifest.cf9e4c04744b1cced7f1dd0c704dab76.js": "/rclass_books/precache-manifest.cf9e4c04744b1cced7f1dd0c704dab76.js",
+    "service-worker.js": "/rclass_books/service-worker.js",
+    "static/css/main.5f361e03.chunk.css.map": "/rclass_books/static/css/main.5f361e03.chunk.css.map",
+    "static/js/2.c81a58c9.chunk.js.LICENSE.txt": "/rclass_books/static/js/2.c81a58c9.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.bcbabcba.js",
+    "static/js/2.c81a58c9.chunk.js",
+    "static/css/main.5f361e03.chunk.css",
+    "static/js/main.ebd47ab3.chunk.js"
+  ]
+}
