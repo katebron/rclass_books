@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { List } from './List'; 
+import { Bestsellers } from './Bestsellers';
 
 function Book(){
-    const [list, setList] = useState([{}]);
+    const [list, setList] = useState([]);
 
     const handleChange = (e) => {
         //const bookList = [...list, setList];
@@ -23,10 +24,12 @@ function Book(){
         <>
         <label> Add Book club options </label>
         <input type="text" onKeyUp={ handleChange } />
-        { list
-          ? <List list={ list }/>
-          : <div id="empty-list">List empty</div>
-        }       
+        { list && list.length > 0 ? <List list={list}/> : null }
+   
+        <div className="best-sellers">
+          <Bestsellers />
+        </div>
+        
           </>
     )
        
