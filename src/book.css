@@ -1,0 +1,10 @@
+
+.book-body{
+    display:flex;
+    flex-direction: row;
+    
+}
+.best-sellers{
+    width: 30%;
+    
+}

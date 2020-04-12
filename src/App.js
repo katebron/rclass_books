@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './book.css';
 import {Book} from './Book';
 
 function App() {
@@ -7,11 +7,14 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>Book Club</h1>
+        </header>
+        <div class="book-body">
         <Book />
          
         
         
-      </header>
+  
+      </div>
     </div>
   );
 }
