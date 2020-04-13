@@ -10,7 +10,7 @@ const Book = () => {
     const [items, setItems] = useState([]);
     const [isbns, setIsbns] = useState([]);
     const bests = NYTBest.Bestsellers;
-    const handleChange = (e) => {
+    /*const handleChange = (e) => {
         //const bookList = [...list, setList];
         if(e.key === 'Enter') {
           const val = e.target.value;
@@ -23,52 +23,51 @@ const Book = () => {
        
           
         }  
-    }
+    }*/
     const addToList = (e) => {
-      
-      const isbn = e.target.value;
-      const newIsbn = [...isbns, {
-        isbn: isbn
-      }]
-      const gbook_info = 'https://www.googleapis.com/books/v1/volumes?q=isbn:' + isbn;
-      const book_data = fetch(gbook_info) 
+      let isbn = e.target.value;
+      let gbook_info = 'https://www.googleapis.com/books/v1/volumes?q=isbn:' + isbn;
+      fetch(gbook_info) 
         .then((response) => {
           return response.json();
         })
         .then((data) => {
           setIsLoaded(true);
-          setItems(data.items);
+          if (data.items[0]){
+           // data = data.items[0];
+           console.log("traverse", data.items[0].volumeInfo)
+            const newIsbn = [...isbns, {
+              isbn: isbn,
+              book_data: data.items[0].volumeInfo
+            }]
+            setIsbns(newIsbn);
+          }
+         
+          
+          
+          
         })
   
       
-      setIsbns(newIsbn);
+
     
     }
     
     return (
         <>
-        <label> Add Book club options </label>
-        {/*<input type="text" onKeyUp={ handleChange } />*/}
+        {/*<label> Add Book club options </label>
+        <input type="text" onKeyUp={ handleChange } />*/}
         { list && list.length > 0 ? <List list={list}/> : null }
    
         <div className="best-sellers">
-
-    
-            
-              
-              
-              <Bestsellers bests={bests} onClickBestsellers={addToList} />
-             
-             
-     
-   
+          <Bestsellers bests={bests} onClickBestsellers={addToList} />
         </div>
-        { isbns && isbns.length > 0 ? <SearchedList isbns={isbns}/> : null }
+       
+        {  isbns && isbns.length > 0 ? <div className="more-wrapper"><SearchedList isbns={isbns}/> </div>: null }
           </>
     )
        
-        
-    
+      
 }
 
 export {Book}

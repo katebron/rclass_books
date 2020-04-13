@@ -4,10 +4,7 @@ import NYTBest from './nytimes';
 
 const Bestsellers = ({bests, onClickBestsellers }) => {
 
-  const [bestlist, setBestList] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [items, setItems] = useState([]);
-  const [isbns, setIsbns] = useState([]);
+
   
 
    return (
