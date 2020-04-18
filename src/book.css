@@ -5,6 +5,18 @@
     
 }
 .best-sellers{
-    width: 30%;
+    width: 300px;
     
 }
+.best-item{
+ display: flex;
+}
+.best-image{
+  max-width: 25%;
+}
+.more-wrapper{
+    max-width: 30%;
+    display:flex;
+    flex-direction: column;
+}
+

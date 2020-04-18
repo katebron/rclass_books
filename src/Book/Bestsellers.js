@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import NYTBest from './nytimes';
 
 
-const Bestsellers = ({bests, onClickBestsellers }) => {
+const Bestsellers = ({bests, onClickBestsellers, onClickMoreInfo }) => {
 
 
   
@@ -10,11 +10,12 @@ const Bestsellers = ({bests, onClickBestsellers }) => {
    return (
     bests.map((best, idx)=>
       <>
-      
-       <p >{best.title}</p>
-       <button value={best.primary_isbn10} onClick={onClickBestsellers}>
-	      	More about {best.title}
-	      </button>
+      <div className="best-item" >
+        
+       <button value={best.primary_isbn10} onClick={onClickMoreInfo}>
+          <img src={best.book_image}  className="best-image" />
+       </button>   
+      </div>
        </>
        
    ))
