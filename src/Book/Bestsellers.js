@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import NYTBest from './nytimes';
 
 
-const Bestsellers = ({bests, onClickBestsellers, onClickMoreInfo }) => {
+const Bestsellers = ({bests, onClickBestsellers, onClickMoreInfo}) => {
 
 
   
