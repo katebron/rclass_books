@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const MoreInfo = ({title}) =>{
     if (title){
         return (
-        
-            <div className="more-book">
+            <div className="more-book" key={title.infoLink}>
            <h3>More info about {title.title} </h3>
            
            <h2>{ title.title } by { title.authors} </h2>

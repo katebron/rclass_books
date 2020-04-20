@@ -1,41 +1,20 @@
 import React, { useState } from 'react';
 import { List } from './List'; 
 import { Bestsellers } from './Bestsellers';
-//import { SearchedList } from './SearchedList';
 import { Overdrive } from './Overdrive';
 import { MoreInfo } from './MoreInfo';
-import {LibraryEbooks} from './LibraryEbooks';
 import NYTBest from './nytimes';
 
 
 const Book = () => {
-    const [list, setList] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
-    const [items, setItems] = useState([]);
     const [isbns, setIsbns] = useState([]);
-    const [show, setShow] = useState(0);
     const [title, setTitle] = useState();
     const [overData, setOverData] = useState();
-    const odToken = process.env.REACT_APP_TOKEN;
     
 
     const bests = NYTBest.Bestsellers;
-    //const ebooks = minuteMan.Products;
-    //console.log("ebooks", ebooks);
-    /*const handleChange = (e) => {
-        //const bookList = [...list, setList];
-        if(e.key === 'Enter') {
-          const val = e.target.value;
-    
-            const newBook = [...list, {
-                name: val
-            }]
-           
-            setList(newBook);
-       
-          
-        }  
-    }*/
+   
     const feature = (e)=>{
       let isbn = e.target.value;
       let gbook = 'https://www.googleapis.com/books/v1/volumes?q=isbn:' + isbn;
@@ -73,28 +52,7 @@ const Book = () => {
       .catch(error => console.error(error)
       );
     }
-    const getNewOverDriveToken = (btitle) => {
-      var odTokenHeaders = new Headers();
-      odTokenHeaders.append("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
-      odTokenHeaders.append("Authorization", "Basic S0FURUJST05NQTpCelczMXVEUmNlTVRLbDZn");
-
-      const tokenRaw = "grant_type=client_credentials";
-
-      const tokenRequestOptions = {
-        method: 'POST',
-        headers: odTokenHeaders,
-        body: tokenRaw,
-        redirect: 'follow'
-      };   
-      fetch(process.env.REACT_APP_OVERDRIVE_TOKEN_URL, tokenRequestOptions)
-      .then((response) => {
-        return response.json();
-      })
-       .then((data) => {
-        searchOverdrive(btitle, data.access_token)
-      })
-      .catch(error => console.log('error', error));
-    }
+    
     const addToList = (e) => {
       let isbn = e.target.value;
       let gbook_info = 'https://www.googleapis.com/books/v1/volumes?q=isbn:' + isbn;
@@ -113,7 +71,6 @@ const Book = () => {
               show: true
             }]
             setIsbns(newIsbn);
-            setShow(true);
           }
          
           
@@ -125,9 +82,7 @@ const Book = () => {
     
     return (
         <>
-        {/*<label> Add Book club options </label>
-        <input type="text" onKeyUp={ handleChange } />*/}
-        { list && list.length > 0 ? <List list={list}/> : null }
+     
         <div className="choose">
        
         <div className="best-sellers">
