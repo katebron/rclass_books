@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 const Availability = ({id}) => {
     const [availData, setAvailData] = useState();
+    
     const checkAvailability = () => {
         const path = 'https://cors-anywhere.herokuapp.com/https://api.overdrive.com/v1/collections/v1L1BnQAAAA2g/products/' + id + '/availability';
         const availHeaders = new Headers();
@@ -26,8 +27,8 @@ const Availability = ({id}) => {
     
             return(
                 <>
-                <button onClick={checkAvailability}>Check availability</button> 
-                { availData ? 
+                
+                { availData? 
                 <div className="minuteman-availability" key={id}><p>Minuteman Library availability info:</p>
                   <ul>
                    <li>Copies owned: { availData.copiesOwned }</li> 
@@ -35,7 +36,7 @@ const Availability = ({id}) => {
                    <li>Number of Holds: { availData.numberOfHolds }</li>
                   </ul>
                  </div> 
-                :null } 
+                :<button onClick={checkAvailability}>Check availability</button>  } 
                 </>
             )
        
