@@ -16,6 +16,8 @@ const Book = () => {
     const [show, setShow] = useState(0);
     const [title, setTitle] = useState();
     const [overData, setOverData] = useState();
+    const odToken = process.env.REACT_APP_TOKEN;
+    
 
     const bests = NYTBest.Bestsellers;
     //const ebooks = minuteMan.Products;
@@ -36,7 +38,6 @@ const Book = () => {
     }*/
     const feature = (e)=>{
       let isbn = e.target.value;
-      console.log("feature isbn", e);
       let gbook = 'https://www.googleapis.com/books/v1/volumes?q=isbn:' + isbn;
       fetch(gbook)
         .then((response) => {
@@ -44,34 +45,55 @@ const Book = () => {
         })
         .then((data) => {
           setIsLoaded(true);
-          console.log("this is feature", data);
           setTitle(data.items[0].volumeInfo);
           searchOverdrive(data.items[0].volumeInfo.title)
         });
        
     }
     const searchOverdrive = (btitle) =>{
-      console.log("name", btitle)
       const title = encodeURI(btitle);
-      const overpath = 'https://cors-anywhere.herokuapp.com/https://api.overdrive.com/v1/collections/v1L1BnQAAAA2g/products?q=' + title + '&limit=10';
-      console.log("path: "+ overpath);
+      const overpath = 'https://cors-anywhere.herokuapp.com/https://api.overdrive.com/v1/collections/v1L1BnQAAAA2g/products?q=' + title + '&limit=5';
+      console.log("overpath: ", overpath);
       const overdrive_headers = new Headers();
-    overdrive_headers.append("Authorization", "Bearer AAEAAIQ4wHTxnMcRMyXbGwDU3gfsKWHnEv0Y7Mv-iSWXY7NpXOogi4kHdoBpmjuU8D0BNNV_AxYm5xFjZb5kNeIAzRDNGGl6LG_cugvUm381CNfURMfgvx8yKISrUVixPnQJx0dTTViuENvAPKYqeWWufjDUVZI-PeZk4c9kY4YFM8oqwevaNxfUH_0THu3ZkFk23DRGM2C5iGGRScf569rhmrXnryqXA4rnZK5Myh4xwECHc9_lZcLpLbjElIucbaUJszFf8tdmkQ9I2KsX_i-0Oaz1NLjQmKWvVUGdVAYRJrbcemZDUEaNwBAkudJSCMg34eKxIV9KdOkQ5QXB8NL4tlyEAQAAAAEAABTFDKdI28XKBYW4PZBX-0t_TWdATrB-UcqM3dPqG_eqXzCgwYQhagbzyHpdoKkv29Nfn4bWf_oTJnk62trT-0ji_B7gv2YbqwanuTUuHg-Vmcl7jzVKxsCP3HhJBaBoP3zDqy72RUQEqZt_1LgFNwIs2BEQ1Hli1FDs0KaozCl2c30TLmJUEoGSH5LVpaOMGRhtRzIMw2Esc8K6tHf6GfulvNRnJhq9ZU0KqVhLSAEQhHiRFgvcFxKRnX4ouSYePZtht6P63pb0MZYHCg-86fZpJuaoxj0Mm-Ve5d0oyiugZ8pGxyg8YH43wA3PCQrXv087L6JVg8jrEPwy-DgPLr3-ZFdrNBg_MZCCl3mUv4A4ZdZZ8aZWHHTjJ9Dqk1WkDUoXnL1xbjIExmjzYjz-bozT7JmHnbMq0z3EWX1FM1p6mNJ77Ht3Ev083c_PxGz4aQ1jJuhlAegfawRxRxfCm55sLPfoo0VmPpCQ-YYA1w_fP4RhE1Sl2HTiVwsFZspbiA");
-    
-    const requestOptions = {
-      method: 'GET',
-      headers: overdrive_headers,
-      redirect: 'follow'
-    };
+      overdrive_headers.append("Authorization", `bearer ${process.env.REACT_APP_TOKEN}`);
+      const requestOptions = {
+        method: 'GET',
+        headers: overdrive_headers,
+        redirect: 'follow'
+      };
       fetch(overpath, requestOptions)
       .then((response) => {
+        console.log(response.status);
         return response.json();
       })
       .then((data) => {
-        console.log("this is overdrive", data.products);
         setOverData(data.products)
 
       })
+      .catch(error => console.error(error)
+      );
+    }
+    const getNewOverDriveToken = (btitle) => {
+      var odTokenHeaders = new Headers();
+      odTokenHeaders.append("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+      odTokenHeaders.append("Authorization", "Basic S0FURUJST05NQTpCelczMXVEUmNlTVRLbDZn");
+
+      const tokenRaw = "grant_type=client_credentials";
+
+      const tokenRequestOptions = {
+        method: 'POST',
+        headers: odTokenHeaders,
+        body: tokenRaw,
+        redirect: 'follow'
+      };   
+      fetch(process.env.REACT_APP_OVERDRIVE_TOKEN_URL, tokenRequestOptions)
+      .then((response) => {
+        return response.json();
+      })
+       .then((data) => {
+        searchOverdrive(btitle, data.access_token)
+      })
+      .catch(error => console.log('error', error));
     }
     const addToList = (e) => {
       let isbn = e.target.value;
@@ -107,8 +129,7 @@ const Book = () => {
         <input type="text" onKeyUp={ handleChange } />*/}
         { list && list.length > 0 ? <List list={list}/> : null }
         <div className="choose">
-        Choose a year for bestsellers:
-        <input type="text" value=""></input>
+       
         <div className="best-sellers">
           <Bestsellers bests={bests} onClickMoreInfo={feature} onClickBestsellers={addToList}/>
           
@@ -118,6 +139,7 @@ const Book = () => {
         
         
         { title ?<div className="more-info"> <MoreInfo title={ title }/><div class="library-info">
+          <h2>Related digital copies through Minuteman Library System</h2>
         {<Overdrive books={overData}/>}
         </div> </div>
           : null}

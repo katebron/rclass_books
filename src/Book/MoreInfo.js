@@ -1,18 +1,23 @@
 import React, { useState } from 'react';
 
 const MoreInfo = ({title}) =>{
-
-    return (
+    if (title){
+        return (
         
-        <div className="more-book">
-       <h3>Here is more info about</h3>
-       
-       <h2>{ title.title } </h2>
-       <em>{ title.description }</em>
-    <p>Page count: { title.pageCount } </p> 
-      </div>
-
-    )
+            <div className="more-book">
+           <h3>More info about {title.title} </h3>
+           
+           <h2>{ title.title } by { title.authors} </h2>
+           <em>{ title.description }</em>
+        <p>Page count: { title.pageCount } </p> 
+          </div>
+    
+        )
+    }
+    else{
+        return ("Loading more info...")
+    }
+   
 
 }   
 
